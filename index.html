@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="sauuri의 심리테스트 모음" />
+  <meta property="og:description" content="MBTI 검증, 짝사랑 진단, 후회 판정 등 재밌는 테스트 6개 모음" />
+  <meta property="og:url" content="https://sauuri.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <title>sauuri · 심리테스트 모음</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #080c14;
+      --card: #0e1420;
+      --border: #1e2a3a;
+      --text: #c8d8f0;
+      --muted: #4a6080;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* 배경 그라데이션 */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 50%, #0cf2ff08 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 20%, #f43f5e08 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, #f59e0b06 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #0e1420;
+      border: 1px solid #1e2a3a;
+      border-radius: 50px;
+      padding: 6px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+    .hero-badge span { color: #0cf2ff; }
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #0cf2ff, #818cf8, #f43f5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+    .hero-stats {
+      display: inline-flex;
+      gap: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 32px;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 24px; font-weight: 800; color: #c8d8f0; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── GRID ── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-top: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      padding-bottom: 80px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent, #0cf2ff);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .app-card:hover {
+      border-color: var(--accent, #0cf2ff);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px color-mix(in srgb, var(--accent, #0cf2ff) 15%, transparent);
+    }
+    .app-card:hover::before { opacity: 1; }
+
+    .card-emoji {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .card-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: color-mix(in srgb, var(--accent, #0cf2ff) 15%, transparent);
+      color: var(--accent, #0cf2ff);
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #e8f0ff;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent, #0cf2ff);
+    }
+    .card-btn svg {
+      width: 14px; height: 14px;
+      transition: transform 0.2s;
+    }
+    .app-card:hover .card-btn svg { transform: translateX(4px); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .footer a { color: #0cf2ff; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .hero { padding: 60px 0 40px; }
+      .hero-stats { gap: 20px; padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">✦ <span>sauuri</span> · 직접 만든 테스트 모음</div>
+    <h1>심심할 때 해보는<br><em>심리테스트 6개</em></h1>
+    <p>무료 · 설치 없음 · 로그인 없음 · 광고 없음<br>링크 누르면 바로 됨.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">테스트</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0원</div>
+        <div class="stat-label">비용</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3분</div>
+        <div class="stat-label">소요시간</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPS -->
+  <div class="section-label">테스트 목록</div>
+  <div class="grid">
+
+    <a class="app-card" href="https://sauuri.github.io/mbti-real/" target="_blank" style="--accent:#0cf2ff">
+      <span class="card-emoji">🧬</span>
+      <span class="card-tag">MBTI 검증</span>
+      <div class="card-title">내 MBTI 진짜 맞아?</div>
+      <div class="card-desc">행동 패턴 12개로 주장하는 MBTI랑 실제가 일치하는지 차원별로 검증해줌.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+    <a class="app-card" href="https://sauuri.github.io/crush-or-not/" target="_blank" style="--accent:#f43f5e">
+      <span class="card-emoji">💘</span>
+      <span class="card-tag">짝사랑 진단</span>
+      <div class="card-title">나 짝사랑 중인가?</div>
+      <div class="card-desc">SNS 확인 빈도, 심장 반응 등 행동 패턴 10개로 짝사랑 여부와 강도를 진단해줌.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+    <a class="app-card" href="https://sauuri.github.io/should-i-do-it/" target="_blank" style="--accent:#f59e0b">
+      <span class="card-emoji">⚖️</span>
+      <span class="card-tag">결정 판정</span>
+      <div class="card-title">이 결정, 해야 해 말아야 해?</div>
+      <div class="card-desc">고민되는 결정을 직접 입력하고 10가지 질문 답하면 해야 할지 말지 판정해줌.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+    <a class="app-card" href="https://sauuri.github.io/regret-or-not/" target="_blank" style="--accent:#c084fc">
+      <span class="card-emoji">🌙</span>
+      <span class="card-tag">후회 판정</span>
+      <div class="card-title">오늘 내가 한 선택들, 후회할까?</div>
+      <div class="card-desc">야식, SNS, 운동 등 오늘 하루 14가지 질문으로 후회 점수를 매겨줌.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+    <a class="app-card" href="https://sauuri.github.io/how-old-today/" target="_blank" style="--accent:#fb923c">
+      <span class="card-emoji">🎂</span>
+      <span class="card-tag">나이 측정</span>
+      <div class="card-title">오늘 나 몇 살처럼 살았어?</div>
+      <div class="card-desc">실제 나이와 관계없이 오늘 하루 행동으로 16~99세 사이 체감 나이 측정.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+    <a class="app-card" href="https://sauuri.github.io/shower-or-not/" target="_blank" style="--accent:#06b6d4">
+      <span class="card-emoji">🚿</span>
+      <span class="card-tag">샤워 판정</span>
+      <div class="card-title">오늘 씻어야 해?</div>
+      <div class="card-desc">15가지 질문으로 오늘 샤워 필요 여부를 진지하게 판정해줌. 공유하기 딱 좋음.</div>
+      <div class="card-btn">해보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    직접 만든 사이드 프로젝트들이에요.<br>
+    문의 · 피드백 → <a href="mailto:dlwjdghks9729@gmail.com">dlwjdghks9729@gmail.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/sauuri" target="_blank">GitHub</a>
+  </div>
+
+</div>
+</body>
+</html>
