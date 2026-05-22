@@ -1,4 +1,4 @@
-const CACHE = 'sauuri-v1';
+const CACHE = 'sauuri-v2';
 const URLS = [
   '/',
   '/manifest.json',
